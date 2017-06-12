@@ -1,0 +1,36 @@
+.category-template {
+  padding: 0 0.3rem 0.3rem;
+  background: #fff;
+  overflow: hidden;
+  .item {
+    float: left;
+    margin: 0.3rem auto 0;
+    height: 1.25rem;
+    width: 25%;
+    box-sizing: border-box;
+    &:nth-of-type(4n) {
+      margin-right: 0;
+    }
+    .pic {
+      margin: 0 auto;
+      height: 0.8rem;
+      width: 0.8rem;
+      img {
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
+    }
+    .name {
+      margin: 0.2rem auto 0;
+      width: 1.2rem;
+      line-height: 1;
+      text-align: center;
+      font-size: 0.24rem;
+      color: 3d4245;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

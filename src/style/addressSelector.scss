@@ -1,0 +1,29 @@
+.address-selector-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.88rem 0 0 0;
+  box-sizing: border-box;
+  min-height: 100%;
+  background: #f5f5f5;
+  z-index: 100;
+  & > .addr-list {
+    .title {
+      margin: 0;
+      padding: 0.1rem 0.3rem;
+      line-height: 1;
+      background: #f5f5f5;
+      font-size: 0.24rem;
+      color: #3d4246;
+    }
+    .addr-item {
+      margin: 0;
+      padding: 0.25rem 0.3rem;
+      line-height: 1;
+      background: #fff;
+      font-size: 0.3rem;
+      color: #3d4246;
+    }
+  }
+}

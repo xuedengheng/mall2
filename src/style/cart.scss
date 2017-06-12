@@ -1,0 +1,250 @@
+.cart-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
+  padding: 0.88rem 0 1.98rem;
+  box-sizing: border-box;
+  background: #f5f5f5;
+  .check {
+    height: 0.42rem;
+    width: 0.42rem;
+    background-image: url(../images/pay_icon_nocheck.png);
+    background-repeat: no-repeat;
+    background-size: 0.42rem 0.42rem;
+  }
+  .check.checked {
+    height: 0.42rem;
+    width: 0.42rem;
+    background-image: url(../images/pay_icon_check.png);
+    background-repeat: no-repeat;
+    background-size: 0.42rem 0.42rem;
+  }
+  & > .platform-box {
+    margin-top: 0.3rem;
+    padding-left: 0.3rem;
+    background: #fff;
+    &:first-of-type {
+      margin-top: 0;
+    }
+    .title {
+      height: 0.86rem;
+      box-sizing: border-box;
+      .check {
+        width: 0.65rem;
+      }
+      .name {
+        margin: 0;
+        line-height: 1;
+        font-size: 0.24rem;
+        color: #3d4246;
+      }
+    }
+    .item {
+      position: relative;
+      height: 1.8rem;
+      box-sizing: border-box;
+      border-top: 0.01rem solid #d9d9d9;
+      .check {
+        width: 0.65rem;
+      }
+      .info {
+        height: 100%;
+        box-sizing: border-box;
+        .pic {
+          float: left;
+          position: relative;
+          margin-top: 0.3rem;
+          height: 1.2rem;
+          width: 1.2rem;
+          .mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.5);
+          }
+          img {
+            display: block;
+            height: 100%;
+            width: 100%;
+          }
+        }
+        .right {
+          margin: 0.3rem 0 0 1.4rem;
+        }
+        .name,
+        .attr,
+        .price {
+          margin: 0;
+          line-height: 1;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .name {
+          font-size: 0.26rem;
+          color: #3d4246;
+          .spec {
+            color: #b3915c;
+          }
+        }
+        .attr {
+          margin-top: 0.12rem;
+          font-size: 0.24rem;
+          color: #b1b1b1;
+        }
+        .price {
+          margin-top: 0.12rem;
+          font-size: 0.32rem;
+          color: #b20000;
+        }
+        .price.not-valid {
+          color: #b1b1b1;
+        }
+        .invalid {
+          position: absolute;
+          bottom: 0.2rem;
+          right: 0.3rem;
+          line-height: 1;
+          font-size: 0.24rem;
+          color: #b20000;
+        }
+        .counter {
+          position: absolute;
+          bottom: 0.15rem;
+          right: 0.3rem;
+          height: 0.6rem;
+          box-sizing: border-box;
+          border: 0.01rem solid #d9d9d9;
+          border-radius: 0.04rem;
+          z-index: 1;
+          .subtract {
+            float: left;
+            padding: 0.08rem 0;
+            height: 100%;
+            width: 0.7rem;
+            box-sizing: border-box;
+            border-right: 0.01rem solid #d9d9d9;
+            line-height: 1;
+            text-align: center;
+            font-size: 0.38rem;
+            color: #3d4246;
+          }
+          .num {
+            float: left;
+            padding: 0.17rem 0.2rem;
+            min-width: 0.4rem;
+            line-height: 1;
+            text-align: center;
+            font-size: 0.24rem;
+            color: #3d4246;
+          }
+          .plus {
+            float: left;
+            padding: 0.08rem 0;
+            height: 100%;
+            width: 0.7rem;
+            box-sizing: border-box;
+            border-left: 0.01rem solid #d9d9d9;
+            line-height: 1;
+            text-align: center;
+            font-size: 0.38rem;
+            color: #3d4246;
+          }
+          .plus.disabled,
+          .subtract.disabled {
+            color: #d9d9d9;
+          }
+        }
+      }
+    }
+  }
+  & > .foot-action {
+    position: absolute;
+    bottom: 1rem;
+    left: 0;
+    width: 100%;
+    height: 0.98rem;
+    box-sizing: border-box;
+    background: #fff;
+    border-top: 0.01rem solid #d9d9d9;
+    z-index: 10;
+    .action-box {
+      padding-left: 0.3rem;
+      .text {
+        float: left;
+        margin: 0.04rem 0 0 0.2rem;
+        line-height: 1;
+        font-size: 0.32rem;
+        color: #3d4246;
+      }
+      .check {
+        float: left;
+      }
+    }
+    .total-inner {
+      float: right;
+      margin-right: 0.2rem;
+      .fee,
+      .freight {
+        margin: 0;
+        line-height: 1;
+        text-align: right;
+      }
+      .fee {
+        margin-bottom: 0.08rem;
+        font-size: 0.4rem;
+        color: #b20000;
+      }
+      .freight {
+        font-size: 0.24rem;
+        color: #b1b1b1;
+      }
+    }
+    .submit-btn {
+      display: block;
+      width: 2rem;
+      height: 100%;
+      box-sizing: border-box;
+      background: #971a1a;
+      outline: none;
+      border: 0;
+      line-height: 1;
+      text-align: center;
+      font-size: 0.32rem;
+      color: #fff;
+    }
+    .submit-btn.del {
+      background: #971a1a;
+    }
+    .submit-btn.submit {
+      background: #617a8e;
+    }
+    .submit-btn.del.disabled,
+    .submit-btn.submit.disabled {
+      background: #ccc;
+    }
+  }
+  & > .empty-box {
+    margin-top: 2.8rem;
+    .pic {
+      margin: 0 auto;
+      height: 1.5rem;
+      width: 2rem;
+      background-image: url(../images/car_wushangpin.png);
+      background-repeat: no-repeat;
+      background-size: 2rem 1.5rem;
+    }
+    .text {
+      margin: 0;
+      margin-top: 0.3rem;
+      line-height: 1;
+      text-align: center;
+      font-size: 0.3rem;
+      color: #949a9f;
+    }
+  }
+}

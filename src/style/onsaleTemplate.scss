@@ -1,0 +1,25 @@
+.onsale-template {
+  background: #fff;
+  .item {
+    .pic {
+      img {
+        display: block;
+        width: 100%;
+      }
+    }
+    .title {
+      margin: 0;
+      padding: 0.2rem 0.3rem 0.1rem;
+      font-size: 0.28rem;
+    }
+    .time {
+      margin: 0;
+      padding: 0 0.3rem 0.2rem;
+      font-size: 0.24rem;
+      color: #949a9f;
+      .bold {
+        color: #607a8f;
+      }
+    }
+  }
+}

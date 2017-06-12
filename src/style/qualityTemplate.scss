@@ -1,0 +1,65 @@
+.quality-template {
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.1rem;
+  }
+  & > .above {
+    overflow: hidden;
+    .above-item {
+      float: left;
+      width: 50%;
+      height: 32.93vw;
+      max-height: 2.47rem;
+      box-sizing: border-box;
+      border-top: 0.01rem solid #d9d9d9;
+      border-right: 0.01rem solid #d9d9d9;
+      &:last-of-type {
+        border-right: 0;
+      }
+    }
+  }
+  & > .below {
+    overflow: hidden;
+    .below-item {
+      float: left;
+      width: 25%;
+      height: 32.93vw;
+      max-height: 2.47rem;
+      box-sizing: border-box;
+      border-top: 0.01rem solid #d9d9d9;
+      border-right: 0.01rem solid #d9d9d9;
+      &:last-of-type {
+        border-right: 0;
+      }
+    }
+  }
+  .piece {
+    width: 3.54rem;
+    .top {
+      margin-bottom: 0.14rem;
+      height: 1.97rem;
+      width: 100%;
+    }
+    .bottom {
+      height: 1.72rem;
+      .item {
+        height: 100%;
+        width: 1.72rem;
+      }
+      .item.left {
+        float: left;
+      }
+      .item.right {
+        float: right;
+      }
+    }
+  }
+  .piece.left {
+    float: left;
+  }
+  .piece.right {
+    float: right;
+  }
+}

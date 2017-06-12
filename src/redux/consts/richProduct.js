@@ -1,0 +1,1 @@
+export const GET_RICH_PRODUCT = 'GET_RICH_PRODUCT'

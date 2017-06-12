@@ -1,0 +1,66 @@
+.footerTab-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1rem;
+  width: 100%;
+  background: #fff;
+  box-sizing: border-box;
+  border-top: 0.01rem solid #d9d9d9;
+  z-index: 10;
+  & > .item {
+    .icon {
+      display: block;
+      margin: 0.12rem auto 0.1rem;
+      background-repeat: no-repeat;
+    }
+    .icon.homepage {
+      height: 0.44rem;
+      width: 0.4rem;
+      background-image: url(../images/homepage.png);
+      background-size: 0.4rem 0.44rem;
+    }
+    .icon.life {
+      height: 0.44rem;
+      width: 0.36rem;
+      background-image: url(../images/life.png);
+      background-size: 0.36rem 0.44rem;
+    }
+    .icon.cart {
+      margin-top: 0.13rem;
+      height: 0.43rem;
+      width: 0.45rem;
+      background-image: url(../images/cart.png);
+      background-size: 0.45rem 0.43rem;
+    }
+    .icon.mine {
+      height: 0.44rem;
+      width: 0.44rem;
+      background-image: url(../images/mine.png);
+      background-size: 0.44rem 0.44rem;
+    }
+    .name {
+      margin: 0;
+      text-align: center;
+      font-size: 0.24rem;
+      color: #949a9f;
+    }
+  }
+  & > .item.active {
+    .icon.homepage {
+      background-image: url(../images/homepage_active.png);
+    }
+    .icon.life {
+      background-image: url(../images/life_active.png);
+    }
+    .icon.cart {
+      background-image: url(../images/cart_active.png);
+    }
+    .icon.mine {
+      background-image: url(../images/mine_active.png);
+    }
+    .name {
+      color: #376e89;
+    }
+  }
+}

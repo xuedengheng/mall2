@@ -1,0 +1,1 @@
+export const GET_JD_EXPRESS_LIST = 'GET_JD_EXPRESS_LIST'

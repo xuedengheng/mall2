@@ -1,0 +1,13 @@
+export const INIT_AREA_STATUS = 'INIT_AREA_STATUS'
+
+export const SET_AREA_STATUS = 'SET_AREA_STATUS'
+
+export const SET_AREA_ENDING = 'SET_AREA_ENDING'
+
+export const GET_PROVINCE_LIST = 'GET_PROVINCE_LIST'
+
+export const GET_CITY_LIST = 'GET_CITY_LIST'
+
+export const GET_COUNTY_LIST = 'GET_COUNTY_LIST'
+
+export const GET_TOWN_LIST = 'GET_TOWN_LIST'

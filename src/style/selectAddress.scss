@@ -1,0 +1,136 @@
+.select-address-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-top: 0.88rem;
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+  background: #f5f5f5;
+  .check {
+    height: 0.42rem;
+    width: 0.42rem;
+    background-image: url(../images/pay_icon_nocheck.png);
+    background-repeat: no-repeat;
+    background-size: 0.42rem 0.42rem;
+  }
+  .check.checked {
+    height: 0.42rem;
+    width: 0.42rem;
+    background-image: url(../images/pay_icon_check.png);
+    background-repeat: no-repeat;
+    background-size: 0.42rem 0.42rem;
+  }
+  & > .default-box {
+    position: relative;
+    padding: 0 0.3rem;
+    height: 2rem;
+    box-sizing: border-box;
+    background: #fff;
+    border-bottom: 0.01rem solid #d9d9d9;
+    .info {
+      padding: 0.2rem 0.3rem 0 0;
+    }
+    .name-inner {
+      margin: 0 0 0.2rem 0;
+      overflow: hidden;
+      .name {
+        float: left;
+        margin: 0;
+        width: 60%;
+        line-height: 1;
+        font-size: 0.28rem;
+        color: #3d4246;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        .bold {
+          color: #376e89;
+        }
+      }
+      .mobile {
+        float: right;
+        margin: 0;
+        line-height: 1;
+        font-size: 0.28rem;
+        color: #3d4246;
+      }
+    }
+    .text {
+      margin: 0.1rem 0 0 0;
+      line-height: 1.4;
+      font-size: 0.24rem;
+      color: #828282;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 2;
+    }
+    .check {
+      margin-top: 0.8rem;
+    }
+  }
+  & > .addr-list {
+    margin-top: 0.2rem;
+    background: #fff;
+    .item {
+      position: relative;
+      padding: 0 0.3rem;
+      height: 2rem;
+      box-sizing: border-box;
+      border-bottom: 0.01rem solid #d9d9d9;
+      .info {
+        padding: 0.2rem 0.3rem 0 0;
+      }
+      .name {
+        margin: 0 0 0.2rem 0;
+        line-height: 1;
+        font-size: 0.28rem;
+        color: #3d4246;
+      }
+      .mobile {
+        position: absolute;
+        top: 0.2rem;
+        right: 0.7rem;
+        margin: 0;
+        line-height: 1;
+        font-size: 0.28rem;
+        color: #3d4246;
+      }
+      .text {
+        margin: 0.1rem 0 0 0;
+        line-height: 1.4;
+        font-size: 0.24rem;
+        color: #828282;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 2;
+      }
+      .check {
+        margin-top: 0.8rem;
+      }
+    }
+  }
+  & > .empty-box {
+    margin-top: 2.8rem;
+    .pic {
+      margin: 0 auto;
+      height: 1.5rem;
+      width: 2rem;
+      background-image: url(../images/address_wudizhi.png);
+      background-repeat: no-repeat;
+      background-size: 2rem 1.5rem;
+    }
+    .text {
+      margin: 0;
+      margin-top: 0.3rem;
+      line-height: 1;
+      text-align: center;
+      font-size: 0.3rem;
+      color: #949a9f;
+    }
+  }
+}

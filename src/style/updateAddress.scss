@@ -1,0 +1,109 @@
+.update-address-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-top: 0.88rem;
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+  background: #f5f5f5;
+  & > .form-list {
+    background: #fff;
+    .item {
+      position: relative;
+      height: 0.88rem;
+      padding: 0 0.3rem;
+      box-sizing: border-box;
+      border-bottom: 0.01rem solid #d9d9d9;
+      .key {
+        float: left;
+        margin-top: 0.25rem;
+        width: 1.94rem;
+        font-size: 0.3rem;
+        color: #5b5b5b;
+      }
+      .value {
+        margin-left: 1.94rem;
+        padding-top: 0.25rem;
+        font-size: 0.3rem;
+        color: #3d4246;
+        input {
+          display: block;
+          outline: none;
+          border: 0;
+          box-shadow: none;
+        }
+      }
+      .icon.go {
+        position: absolute;
+        top: 0.3rem;
+        right: 0.3rem;
+      }
+    }
+  }
+  .default-box {
+    margin: 0.2rem 0 0.4rem;
+    height: 0.88rem;
+    padding: 0 0.3rem;
+    box-sizing: border-box;
+    background: #fff;
+    .key {
+      float: left;
+      margin-top: 0.25rem;
+      width: 1.94rem;
+      font-size: 0.3rem;
+      color: #5b5b5b;
+    }
+    .slide {
+      float: right;
+      margin-top: -0.3rem;
+    }
+    .cir {
+      display:none;
+    }
+    .btn {
+      display:block;
+      width: 0.5rem;
+      height: 0.5rem;
+      left: 0.4rem;
+      top: 0.5rem;
+      border-radius: 0.25rem;
+      position:relative;
+      transition: 0.4s;
+      background: #fff;
+      box-shadow: 1px 1px 2px #ccc;
+    }
+    .cir:checked + .btn {
+      background: #fff;
+      left: 0;
+      box-shadow: -1px 1px 2px #ccc;
+    }
+    .ct {
+      display: block;
+      width: 0.9rem;
+      height: 0.5rem;
+      border-radius: 0.25rem;
+      transition: 0.4s;
+      background: #376e89;
+    }
+    .cir:checked + .btn + .ct {
+      background: #ccc;
+      transition: 0.4s;
+    }
+  }
+  .del-btn {
+    display: block;
+    margin: 0.2rem 0 0.4rem;
+    height: 0.88rem;
+    width: 100%;
+    padding: 0 0.3rem;
+    box-sizing: border-box;
+    background: #fff;
+    outline: none;
+    border: 0;
+    line-height: 1;
+    text-align: center;
+    font-size: 0.32rem;
+    color: #376e89;
+  }
+}

@@ -1,0 +1,9 @@
+export const ADD_NEW_ADDRESS = 'ADD_NEW_ADDRESS'
+
+export const ADDRESS_LIST = 'ADDRESS_LIST'
+
+export const UPDATE_ADDRESS = 'UPDATE_ADDRESS'
+
+export const DELETE_ADDRESS = 'DELETE_ADDRESS'
+
+export const SELECT_ADDRESS = 'SELECT_ADDRESS'

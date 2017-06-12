@@ -1,0 +1,117 @@
+.express-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-top: 0.88rem;
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+  background: #fff;
+  & > .express-info-box {
+    height: 1.6rem;
+    padding: 0.3rem;
+    box-sizing: border-box;
+    background: #617a8e;
+    color: #fff;
+    .pic {
+      height: 1.2rem;
+      width: 1.2rem;
+      background: #b1b1b1;
+      border-radius: 0.6rem;
+      img {
+        display: block;
+        height: 100%;
+        width: 100%;
+        border-radius: 0.6rem;
+      }
+    }
+    .info {
+      margin-left: 0.2rem;
+      .name {
+        margin: 0 0 0.2rem 0;
+        line-height: 1;
+        font-size: 0.26rem;
+      }
+      .text {
+        margin: 0.1rem 0 0 0;
+        line-height: 1;
+        font-size: 0.24rem;
+      }
+    }
+  }
+  & > .express-history-box {
+    padding: 0 0.3rem;
+    .title {
+      margin: 0;
+      height: 0.88rem;
+      box-sizing: border-box;
+      border-bottom: 0.01rem solid #d9d9d9;
+      line-height: 0.88rem;
+      font-size: 0.28rem;
+      color: #3d4246;
+    }
+    .history-list {
+      padding: 0.3rem 0;
+      .history-step {
+        position: relative;
+        padding: 0 0 0.3rem 0;
+        overflow: hidden;
+        .step-dot {
+          float: left;
+          margin-left: 0.2rem;
+          height: 0.2rem;
+          width: 0.2rem;
+          box-sizing: border-box;
+          background: #949a9f;
+          border-radius: 0.1rem;
+        }
+        .step-line {
+          position: absolute;
+          top: 0;
+          left: 0.29rem;
+          height: 100%;
+          width: 0.01rem;
+          border-left: 0.02rem solid #949a9f;
+          z-index: 0;
+        }
+        .step-content {
+          margin-left: 0.9rem;
+          padding: 0 0 0.3rem 0;
+          border-bottom: 0.01rem solid #d9d9d9;
+          color: #949a9f;
+          .text {
+            margin: 0 0 0.1rem;
+            line-height: 1;
+            font-size: 0.26rem;
+          }
+          .time {
+            margin: 0.2rem 0 0 0;
+            line-height: 1;
+            font-size: 0.24rem;
+          }
+        }
+        &:first-of-type {
+          .step-line {
+            top: 0.3rem;
+          }
+          .step-dot {
+            margin-left: 0.15rem;
+            height: 0.3rem;
+            width: 0.3rem;
+            background: #376e89;
+            border: 0.02rem solid #949a9f;
+            border-radius: 0.15rem;
+          }
+          .step-content {
+            color: #376e89;
+          }
+        }
+        &:last-of-type {
+          .step-line {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

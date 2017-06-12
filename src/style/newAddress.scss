@@ -1,0 +1,62 @@
+.new-address-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-top: 0.88rem;
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+  background: #f5f5f5;
+  & > .add-btn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding-top: 0.3rem;
+    height: 0.98rem;
+    box-sizing: border-box;
+    background: #617a8e;
+    text-align: center;
+    font-size: 0.32rem;
+    color: #fff;
+    outline: none;
+    border: 0;
+  }
+  & > .form-list {
+    background: #fff;
+    .item {
+      position: relative;
+      height: 0.88rem;
+      padding: 0 0.3rem;
+      box-sizing: border-box;
+      border-bottom: 0.01rem solid #d9d9d9;
+      .key {
+        float: left;
+        margin-top: 0.25rem;
+        width: 1.94rem;
+        font-size: 0.3rem;
+        color: #5b5b5b;
+      }
+      .value {
+        margin-left: 1.94rem;
+        padding-top: 0.25rem;
+        font-size: 0.3rem;
+        color: #3d4246;
+        input {
+          display: block;
+          outline: none;
+          border: 0;
+          box-shadow: none;
+        }
+      }
+      .value.empty {
+        color: #b1b1b1;
+      }
+      .icon.go {
+        position: absolute;
+        top: 0.3rem;
+        right: 0.3rem;
+      }
+    }
+  }
+}

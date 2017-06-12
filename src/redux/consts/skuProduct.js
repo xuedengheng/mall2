@@ -1,0 +1,2 @@
+export const GET_MODAL_PRODUCT = 'GET_MODAL_PRODUCT'
+export const ADD_MODAL_CART = 'ADD_MODAL_CART'

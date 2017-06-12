@@ -1,0 +1,48 @@
+.article-wrap {
+  padding: 1.18rem 0.3rem 0.3rem;
+  & > .banner-box {
+    height: 100%;
+    width: 100%;
+    img {
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+  }
+  & > .info-box {
+    margin: 0.3rem 0;
+    padding: 0 0.32rem;
+    font-size: 0.24rem;
+    color: #828282;
+    .tag {
+      display: inline-block;
+      padding: 0 0.12rem 0 0;
+      border-right: 0.01rem solid #828282;
+      color: #b3915c;
+    }
+    .time {
+      display: inline-block;
+      padding-left: 0.12rem;
+      color: #828282;
+    }
+  }
+  & > .title {
+    margin: 0 0 0.6rem 0;
+    padding: 0 0.32rem;
+    word-wrap: break-word;
+    font-size: 0.36rem;
+    color: #333;
+  }
+  & > .content-box {
+    p {
+      line-height: 1.4;
+      font-size: 0.3rem;
+      color: #333;
+    }
+    img {
+      display: block;
+      margin: 0.3rem auto 0.4rem;
+      max-width: 100%;
+    }
+  }
+}

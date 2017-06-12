@@ -1,0 +1,44 @@
+.recommend-template {
+  .item {
+    position: relative;
+    padding: 0.2rem 0.3rem;
+    border-top: 0.01rem solid #d9d9d9;
+    overflow: hidden;
+    .icon.cart {
+      position: absolute;
+      bottom: 0.4rem;
+      right: 0.3rem;
+    }
+    .pic {
+      float: left;
+      height: 2.2rem;
+      width: 2.3rem;
+      img {
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
+    }
+    .info {
+      margin: 0.3rem 0 0 2.5rem;
+      .name {
+        margin: 0;
+        line-height: 1;
+        font-size: 0.28rem;
+        color: #3d4246;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .price {
+        margin: 0.3rem 0 0 0;
+        line-height: 1;
+        font-size: 0.32rem;
+        color: #b20000;
+        .unit {
+          font-size: 0.24rem;
+        }
+      }
+    }
+  }
+}

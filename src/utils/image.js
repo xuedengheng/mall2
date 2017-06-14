@@ -1,6 +1,6 @@
 import EXIF from './exif'
 
-const QUALITY = 60
+const QUALITY = 30
 
 window.URL = window.URL || window.webkitURL
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 
 import template from './common/template'
 
@@ -12,9 +13,15 @@ class Lnk extends Component {
   }
 
   render() {
+    const { query } = this.props.location
     const { url } = this.state
     return (
       <div className="lnk-wrap">
+        {query.title &&
+          <Helmet>
+            <title>{query.title}</title>
+          </Helmet>
+        }
         <iframe
           src={url}
           className="frame"

@@ -236,8 +236,13 @@ class Pay extends Component {
             break
           case 'ALIPAY':
           case 'FEIMA':
+            if (query.mode && query.mode === 'submit') {
+              hashHistory.replace(`pay?callback=1&mode=submit&orderjnid=${result.orderJnId}&amount=${amount}`)
+            } else if (query.mode && query.mode === 'immediately') {
+              hashHistory.replace(`pay?callback=1&id=${query.id}&mode=immediately&orderjnid=${result.orderJnId}`)
+            }
             setTimeout(() => {
-              window.location.replace(json.result.payInfo.payUrl)
+              window.location.href = json.result.payInfo.payUrl
             }, 0)
             break
           default:

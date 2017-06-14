@@ -3,7 +3,7 @@ import { hashHistory, Lifecycle } from 'react-router'
 import moment from 'moment'
 import _ from 'lodash'
 import classNames from 'classnames'
-import reactMixin from 'react-mixin'
+import { Helmet } from 'react-helmet'
 
 import { getPlatform } from '../config/constant'
 import { Tool } from '../config/Tool'
@@ -12,7 +12,6 @@ import InvalidModal from './common/invalidModal'
 import template from './common/template'
 import CouponItem from './common/couponItem'
 
-@reactMixin.decorate(Lifecycle)
 class SubmitOrder extends Component {
 
   constructor(props) {
@@ -29,22 +28,17 @@ class SubmitOrder extends Component {
       isShowCoupon: false,
       activity: null
     }
-    this.routerWillLeave = this.routerWillLeave.bind(this)
-  }
-
-  routerWillLeave(nextLocation) {
-    const { isShowCoupon } = this.state
-    if (isShowCoupon) {
-      this.setState({ isShowCoupon: false })
-      return false
-    }
   }
 
   componentWillMount() {
     const { selectedCarts } = this.props.cart
+    const { query } = this.props.location
     this.getActivity()
     this.props.addressList([])
     this.props.addressListRequest()
+    if (query.forward && query.forward === 'coupon') {
+      this.setState({ isShowCoupon: true })
+    }
     if (selectedCarts.length > 0) {
       this.setState({ remarks: _.fill(Array(selectedCarts.length), '') })
       this.props.getPromotionList(this.createOrderSkuDTOs())
@@ -62,8 +56,15 @@ class SubmitOrder extends Component {
   componentWillReceiveProps(nextProps) {
     const { selectedAddressId } = nextProps.cart
     const { addressList } = nextProps.address
+    const { query } = nextProps.location
+
     if (!selectedAddressId && addressList.length > 0) {
       this.props.getCartAddressId(addressList.filter(address => address.defaultFlag == 'Y')[0].addressId)
+    }
+    if (query.forward && query.forward === 'coupon') {
+      this.setState({ isShowCoupon: true })
+    } else {
+      this.setState({ isShowCoupon: false })
     }
   }
 
@@ -201,7 +202,7 @@ class SubmitOrder extends Component {
 
   goToRule(e) {
     e.preventDefault()
-    hashHistory.push(`lnk?u=${encodeURIComponent('http://cdn.9yiwu.com/H5/Rule/coupon_rule.html')}`)
+    hashHistory.push(`lnk?title=优惠券说明&u=${encodeURIComponent('http://cdn.9yiwu.com/H5/Rule/coupon_rule.html')}`)
   }
 
   showPromoModal(promo, e) {
@@ -240,23 +241,22 @@ class SubmitOrder extends Component {
 
   showCouponModal(e) {
     e.preventDefault()
-    this.setState({ isShowCoupon: true })
+    const { query } = this.props.location
+    hashHistory.push(`submitorder?forward=coupon&mode=${query.mode}`)
   }
 
   closeCouponModal(e) {
     e.preventDefault()
-    this.setState({ isShowCoupon: false })
+    hashHistory.goBack()
   }
 
   selectCoupon(coupon) {
     const { disuse, activity } = this.state
     if (!activity && coupon.available === 'Y') {
-      this.setState({
-        selectedCoupon: coupon,
-        isShowCoupon: false
-      })
+      this.setState({ selectedCoupon: coupon })
       setTimeout(() => {
         this.getFinalFee(disuse)
+        hashHistory.goBack()
       }, 0)
     }
   }
@@ -413,6 +413,9 @@ class SubmitOrder extends Component {
 
     return isShowCoupon && couponPromo ? (
       <div className="coupons-wrap select-mode">
+        <Helmet>
+          <title>易物研选</title>
+        </Helmet>
         <div className={classNames('page-header', { 'be-fixed': showFixed })}>
           <div className="page-back" onClick={this.closeCouponModal.bind(this)}>
             <div className="icon back"></div>
@@ -451,6 +454,9 @@ class SubmitOrder extends Component {
       </div>
     ) : (
       <div className="submit-order-wrap">
+        <Helmet>
+          <title>易物研选</title>
+        </Helmet>
         <div className={classNames('page-header', { 'be-fixed': showFixed })}>
           <div className="page-back" onClick={this.goBack.bind(this)}>
             <div className="icon back"></div>

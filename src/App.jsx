@@ -63,6 +63,7 @@ import './style/refundTrace.scss'
 import './style/salesReturn.scss'
 import './style/coupon.scss'
 import './style/timeLimit.scss'
+import './style/galleryWrap.scss'
 
 const wechatAuthUrl = 'http://wechat.9yiwu.com/account-service/wechat/redirectToTarget'
 

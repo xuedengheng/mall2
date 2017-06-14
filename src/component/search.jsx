@@ -8,6 +8,8 @@ import template from './common/template'
 
 const searchKey = 'ywyx_search'
 
+const SEARCH_KEY_LIMIT = 10
+
 class Search extends Component {
 
   constructor(props) {
@@ -34,10 +36,11 @@ class Search extends Component {
   }
 
   handleSearch(e) {
+    e.preventDefault()
     const { search, history } = this.state
     if (search.trim() !== '') {
       if (history.indexOf(search) < 0) {
-        const newHistory = history.concat(search)
+        const newHistory = [search].concat(history.slice(0, SEARCH_KEY_LIMIT - 1))
         storage.set(searchKey, newHistory)
       }
       hashHistory.push(`result?from=search&names=${encodeURIComponent(search)}`)
@@ -65,9 +68,11 @@ class Search extends Component {
 
     return (
       <div className="search-wrap">
-        <div
+        <form
           data-flex="dir:left cross:center box:last"
-          className="input-box">
+          className="input-box"
+          action=""
+          onSubmit={this.handleSearch.bind(this)}>
           <div className="input-inner">
             <div className="search icon"></div>
             <input
@@ -76,11 +81,10 @@ class Search extends Component {
               placeholder="商品名 品牌 分类"
               value={this.state.search}
               onChange={this.bindSearch.bind(this)}
-              onInput={this.bindSearch.bind(this)}
-              onBlur={this.handleSearch.bind(this)} />
+              onInput={this.bindSearch.bind(this)} />
           </div>
           <div className="cancel-btn" onClick={this.goBack.bind(this)}>取消</div>
-        </div>
+        </form>
         <div className="history-box">
           <div data-flex="dir:left cross:center box:justify" className="title">
             <div className="search icon"></div>

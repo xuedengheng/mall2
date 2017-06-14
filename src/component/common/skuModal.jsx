@@ -153,7 +153,7 @@ export default class SkuModal extends Component {
 
   increaseQuantity(quantity){
     const { selectedSku } = this.state
-    if(!selectedSku) return false
+    if(_.isEmpty(selectedSku)) return false
     if (quantity >= selectedSku.stock) return false
     let result = quantity + 1
     if(result > selectedSku.stock) result = selectedSku.stock
@@ -335,12 +335,12 @@ export default class SkuModal extends Component {
               <p className="count-title">请选择数量：</p>
               <div className="counter">
                 <div
-                  className={classNames('subtract', { disabled: quantity <= 1 })}
+                  className={classNames('subtract', { disabled: _.isEmpty(selectedSku) || quantity <= 1 })}
                   onClick={this.decreaseQuantity.bind(this, quantity)}
                   >-</div>
                 <div className="num">{quantity}</div>
                 <div
-                  className={classNames('plus', { disabled: quantity >= selectedSku.stock })}
+                  className={classNames('plus', { disabled: _.isEmpty(selectedSku) || quantity >= selectedSku.stock })}
                   onClick={this.increaseQuantity.bind(this, quantity)}
                   >+</div>
               </div>

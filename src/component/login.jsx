@@ -125,13 +125,13 @@ class Login extends Component {
         <div className="logo-box"></div>
         <div className="form">
           <div className="input-frag">
-            <input className="input-inner" type="tel" placeholder="手机号" maxLength="11" ref="mobileInput" onChange={this.handleInput.bind(this, 'mobile')}/>
+            <input className="input-inner" type="tel" placeholder="手机号" maxLength="20" ref="mobileInput" onChange={this.handleInput.bind(this, 'mobile')}/>
             {mobile &&
               <button type="button" className="del-btn" onClick={this.handleDel.bind(this, 'mobile')}></button>
             }
           </div>
           <div className="input-frag">
-            <input className="input-inner" type="password" placeholder="登录密码" ref="passwordInput" onChange={this.handleInput.bind(this, 'password')}/>
+            <input className="input-inner" type="password" placeholder="登录密码" maxLength="15" ref="passwordInput" onChange={this.handleInput.bind(this, 'password')}/>
             {password &&
               <button type="button" className="del-btn" onClick={this.handleDel.bind(this, 'password')}></button>
             }

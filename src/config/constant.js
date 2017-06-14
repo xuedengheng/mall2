@@ -28,18 +28,18 @@ export const REFUND_TYPE = {
 }
 
 export const RECEIVE_FLAG = {
-  'PENDING_RECEIVE': '未收货',
-  'RECEIVED': '已收货'
+  'PENDING_RECEIVE': '未收到货物',
+  'RECEIVED': '已收到货物'
 }
 
 export const REFUND_STATUS = {
   'REJECT': '退款失败',
   'IN_PROGRESSING': '审核中',
   'JUSTIFIED': '已修改',
-  'PENDING_RETURN': '待退货',
+  'PENDING_RETURN': '请退货',
   'USER_RETURNED': '已退货',
   'RECEIEVE_RETURN': '已收货',
-  'NO_RECEIEVE_RETURN': '货品失败',
+  'NO_RECEIEVE_RETURN': '退货失败',
   'PENDING_REFUND': '退款中',
   'REFUNDED': '退款成功'
 }

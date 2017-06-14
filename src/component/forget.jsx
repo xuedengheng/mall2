@@ -13,9 +13,9 @@ class Forget extends React.Component {
     super(props)
     this.timer = null
     this.state = {
-      mobile: null,
-      password: null,
-      verifyCode: null,
+      mobile: '',
+      password: '',
+      verifyCode: '',
       vcType: 'RESET',
       vcTimer: 60,
       ready: true
@@ -38,11 +38,11 @@ class Forget extends React.Component {
 
     if (!Tool.phoneCheck(mobile)) {
       res = "请输入正确手机号"
-    } else if (password == null || password.length < 6 || password.length > 15 ) {
+    } else if (password == '' || password.length < 6 || password.length > 15 ) {
       res = "请输入新密码（6-15字符）"
     } else if (!isPassword(password)) {
       res = "密码只能由字母数字下划线组成"
-    } else if (verifyCode==null) {
+    } else if (verifyCode == '') {
       res = "请输入验证码"
     } else {
       res = true
@@ -99,7 +99,7 @@ class Forget extends React.Component {
     let attrs = this.state
     let formCheckRes = this.formCheck(this)
 
-    if(formCheckRes==true){
+    if (formCheckRes == true) {
       passwordResetReq(attrs.mobile, attrs.password, attrs.verifyCode);
     }else{
       Tool.alert(formCheckRes)

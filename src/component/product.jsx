@@ -21,6 +21,7 @@ import AddressSelector from './common/addressSelector'
 import PromoModal from './common/promoModal'
 import SkuModal from './common/skuModal'
 import template from './common/template'
+import GalleryWrap from './common/galleryWrap'
 
 const areaKey = 'ywyx_jd_area'
 
@@ -36,6 +37,7 @@ class Product extends Component  {
       isShowAttention: false,
       isShowCart: false,
       isShowAddr: false,
+      isShowGallery: false,
       cartMode: 'normal',
       quantity: 1,
       selectedSku: {},
@@ -106,14 +108,15 @@ class Product extends Component  {
   }
 
   componentDidMount() {
-    document.querySelector('.product-wrap').addEventListener('scroll', this.handleScroll.bind(this))
     this.timer = setInterval(() => {
       this.setState({ now: moment() })
     }, 1000)
   }
 
   componentWillUnmount() {
-    document.querySelector('.product-wrap').removeEventListener('scroll', this.handleScroll.bind(this))
+    if (document.querySelector('.product-wrap')) {
+      document.querySelector('.product-wrap').removeEventListener('scroll', this.handleScroll.bind(this), false)
+    }
     this.clearTimer()
   }
 
@@ -141,6 +144,11 @@ class Product extends Component  {
     } else if (activity.activityType === 'NEW_USER_LIMITATION') {
       window.location.href = activity.url
     }
+  }
+
+  productWrapLoaded(e) {
+    document.querySelector('.product-wrap').removeEventListener('scroll', this.handleScroll.bind(this), false)
+    document.querySelector('.product-wrap').addEventListener('scroll', this.handleScroll.bind(this), false)
   }
 
   handleScroll(e) {
@@ -190,6 +198,15 @@ class Product extends Component  {
 
   closeAttentionModal() {
     this.setState({ isShowAttention: false })
+  }
+
+  showGallery() {
+    document.querySelector('.product-wrap').removeEventListener('scroll', this.handleScroll.bind(this), false)
+    this.setState({ isShowGallery: true })
+  }
+
+  closeGallery() {
+    this.setState({ isShowGallery: false })
   }
 
   setStateProduct() {
@@ -292,8 +309,6 @@ class Product extends Component  {
     let selected_keys = skuSquareSelectedKeys(this.state.skuSquare)
     let filtedSku = getSkuByKeys(this.state.skuMatrix, this.state.product, selected_keys)
 
-    console.log( "selected keys", selected_keys , "filtedSku", filtedSku)
-
     if (filtedSku) {
       this.setState({ selectedSku: filtedSku })
       this.setState({ initSku: filtedSku })
@@ -339,11 +354,12 @@ class Product extends Component  {
 
 
   increaseQuantity(quantity){
-    if(_.isEmpty( this.state.selectedSku )) return false
-    if (quantity >= this.state.selectedSku.stock) return false
+    const { selectedSku } = this.state
+    if(_.isEmpty(selectedSku)) return false
+    if (quantity >= selectedSku.stock) return false
     let result = quantity + 1
-    if(result > this.state.selectedSku.stock) result = this.state.selectedSku.stock
-    this.setState({quantity: result})
+    if(result > selectedSku.stock) result = selectedSku.stock
+    this.setState({ quantity: result })
   }
 
   decreaseQuantity(quantity){
@@ -564,6 +580,7 @@ class Product extends Component  {
 
   modifyStorage(e) {
     e.preventDefault()
+    document.querySelector('.product-wrap').removeEventListener('scroll', this.handleScroll.bind(this), false)
     this.setState({ isShowAddr: true })
   }
 
@@ -646,7 +663,10 @@ class Product extends Component  {
                     transitionAppearTimeout={500}
                     transitionEnter={false}
                     transitionLeave={false}>
-                    <img src={url} onLoad={() => { window.dispatchEvent(new Event('resize')) }} />
+                    <img
+                      src={url}
+                      onLoad={() => { window.dispatchEvent(new Event('resize')) }}
+                      onClick={this.showGallery.bind(this)} />
                   </ReactCSSTransitionGroup>
                 </LazyLoad>
               </div>
@@ -664,7 +684,7 @@ class Product extends Component  {
               transitionAppearTimeout={500}
               transitionEnter={false}
               transitionLeave={false}>
-              <img src={pictures[0]} />
+              <img src={pictures[0]} onClick={this.showGallery.bind(this)} />
             </ReactCSSTransitionGroup>
           </LazyLoad>
         </div>
@@ -768,13 +788,27 @@ class Product extends Component  {
     )
   }
 
+  renderGallery() {
+    const { product } = this.state
+    const pictures = (() => {
+      if (product.pictureUrls && product.pictureUrls.length > 0) {
+        return product.pictureUrls
+      } else if (product.picture) {
+        return [product.picture]
+      } else {
+        return null
+      }
+    })()
+    return <GalleryWrap pictures={pictures} onClose={this.closeGallery.bind(this)}></GalleryWrap>
+  }
+
   render() {
     const { showFixed } = this.props.global
     const cartLength = this.props.cart.list.length
     const productId = this.props.params.id
     const guessList = this.props.searchList.list
     const richProduct = this.props.richProduct.detail
-    const { now, product, hadStorage, tab, selectedArea, isShowAttention, isShowCart, isShowSkuModal, isShowPromo, isShowAddr, cartMode, mode } = this.state
+    const { selectedSku, quantity, now, product, hadStorage, tab, selectedArea, isShowGallery, isShowAttention, isShowCart, isShowSkuModal, isShowPromo, isShowAddr, cartMode, mode } = this.state
     const freightFreeThresholdText = (() => {
       if (product.freightFreeThreshold) {
         const threshold = Number(product.freightFreeThreshold)
@@ -796,8 +830,8 @@ class Product extends Component  {
 
     return isShowAddr ? (
       <AddressSelector {...this.props} onChoose={this.handleAddrChoose.bind(this)} onClose={this.handleAddrClose.bind(this)}></AddressSelector>
-    ) : (
-      <div className="product-wrap" style={style}>
+    ) : isShowGallery ? this.renderGallery() : (
+      <div className="product-wrap" style={style} onLoad={this.productWrapLoaded.bind(this)}>
         <div className="pic-box">
           {product.activity && this.renderActivity()}
           {product.pictureUrls && product.pictureUrls.length > 0 ?
@@ -811,7 +845,7 @@ class Product extends Component  {
                     transitionAppearTimeout={500}
                     transitionEnter={false}
                     transitionLeave={false}>
-                    <img src={product.picture} />
+                    <img src={product.picture} onClick={this.showGallery.bind(this)} />
                   </ReactCSSTransitionGroup>
                 </LazyLoad>
               </div>
@@ -959,9 +993,15 @@ class Product extends Component  {
               <div className="count-inner">
                 <p className="title">购买数量</p>
                 <div className="counter">
-                  <div className="subtract" onClick={this.decreaseQuantity.bind(this, this.state.quantity)}>-</div>
-                  <div className="num">{this.state.quantity}</div>
-                  <div className="plus" onClick={this.increaseQuantity.bind(this, this.state.quantity)}>+</div>
+                  <div
+                    className={classNames('subtract', { disabled: _.isEmpty(selectedSku) || quantity <= 1 })}
+                    onClick={this.decreaseQuantity.bind(this, quantity)}
+                    >-</div>
+                  <div className="num">{quantity}</div>
+                  <div
+                    className={classNames('plus', { disabled: _.isEmpty(selectedSku) || quantity >= selectedSku.stock })}
+                    onClick={this.increaseQuantity.bind(this, quantity)}
+                    >+</div>
                 </div>
               </div>
 

@@ -15,7 +15,7 @@ export const getShowcaseList = (isFirst = false) => {
     .then(json => {
       dispatch(changeLoadingState(false))
       dispatch(getShowcaseListSuccess(json.result))
-      if (isFirst) dispatch(getShowcaseTemplate(json.result[0].showcaseId))
+      if (isFirst) dispatch(getShowcaseTemplate(json.result[0].showcaseId, true))
     })
     .catch(error => {
       dispatch(changeLoadingState(false))
@@ -25,16 +25,17 @@ export const getShowcaseList = (isFirst = false) => {
   }
 }
 
-export const getShowcaseTemplate = (id) => {
+export const getShowcaseTemplate = (id, isHomePage = false) => {
   return dispatch => {
+    dispatch(getShowcaseTemplateSuccess(null))
     dispatch(changeLoadingState(true))
     return requestData({
       url: `${BASE_URL}${APP_PATH}/template/${id}`
     })
     .then(json => {
       dispatch(changeLoadingState(false))
-      dispatch(updateShowcaseIndex(id))
       dispatch(getShowcaseTemplateSuccess(json.result))
+      if (isHomePage) dispatch(updateShowcaseIndex(id))
     })
     .catch(error => {
       dispatch(changeLoadingState(false))

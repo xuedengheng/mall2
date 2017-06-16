@@ -1,8 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM, { render } from 'react-dom'
 import { Provider } from 'react-redux'
+import Cookies from 'js-cookie'
+
 import route from './router'
 import store from './redux/store'
+
 import './config/config.js'
 
 import { Tool } from './config/Tool'
@@ -73,15 +76,20 @@ const openHrefArr = href.split('openId=')
 const openHashArr = hash.split(/[&|?]openId=/)
 
 if (isWx()) {
-  const openId = session.get('openId')
+  const openId = Cookies.get('openId') || ''
   if (!openId) {
     if (openHrefArr.length == 2) {
-      session.set('openId', openHrefArr[1])
+      Cookies.set('openId', openHrefArr[1])
       if (!newQuery.wx) {
         window.location.replace(`${origin}${pathname}?wx=fsdhfu&openId=${openHrefArr[1]}${openHashArr[0]}`)
       }
     } else {
       window.location.replace(`${wechatAuthUrl}?target=${window.location.href}`)
+    }
+  } else {
+    alert('openId in inint => ' + openId)
+    if (!newQuery.wx) {
+      window.location.replace(`${origin}${pathname}?wx=fsdhfu&openId=${openId}${openHashArr[0]}`)
     }
   }
 }

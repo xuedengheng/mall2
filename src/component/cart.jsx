@@ -24,12 +24,14 @@ class Cart extends Component {
   }
 
   componentWillMount() {
-    this.props.getCartList(true)
-    .then(json => {
-      if (json && json.success) {
-        this.setState({ inited: true })
-      }
-    })
+    const promise = this.props.getCartList(true)
+    if (promise) {
+      promise.then(json => {
+        if (json && json.success) {
+          this.setState({ inited: true })
+        }
+      })
+    }
     this.props.getCartAddressId('')
     this.props.addressList([])
   }

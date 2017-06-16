@@ -16,10 +16,26 @@ import OnsaleTemplate from './common/onsaleTemplate'
 import CustomOneTemplate from './common/customOneTemplate'
 import CustomTwoTemplate from './common/customTwoTemplate'
 
+function disableScroll(e) {
+  e.preventDefault()
+}
+
 class Showcase extends Component {
 
   componentWillMount() {
     this.props.getShowcaseTemplate(this.props.params.id)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { showSkuModal } = nextProps.global
+    const { wrap } = this.refs
+    if (wrap) {
+      if (showSkuModal) {
+        wrap.addEventListener('touchmove', disableScroll, false)
+      } else {
+        wrap.removeEventListener('touchmove', disableScroll, false)
+      }
+    }
   }
 
   goBack(e) {
@@ -31,7 +47,6 @@ class Showcase extends Component {
     const { showcase } = this.props
 
     if (showcase.template) {
-      console.log(showcase.template)
       return (
         <div className="recommened-box">
           {showcase.template.components.map((component, index) => {
@@ -169,16 +184,11 @@ class Showcase extends Component {
   }
 
   render() {
-    const { showFixed, showSkuModal } = this.props.global
+    const { showFixed } = this.props.global
     const { template } = this.props.showcase
 
-    const style = showSkuModal ? {
-      height: '100%',
-      overflow: 'hidden'
-    } : {}
-
     return (
-      <div className="showcase-wrap" style={style}>
+      <div className="showcase-wrap" ref="wrap">
         <div className={classNames('page-header', { 'be-fixed': showFixed })}>
           <div className="page-back" onClick={this.goBack.bind(this)}>
             <div className="icon back"></div>

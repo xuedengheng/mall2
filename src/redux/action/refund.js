@@ -148,7 +148,7 @@ const setRefundListPage = (payload) => {
   }
 }
 
-const getRefundDetailSuccess = (payload) => {
+export const getRefundDetailSuccess = (payload) => {
   return {
     type: actionTypes.GET_REFUND_DETAIL,
     payload

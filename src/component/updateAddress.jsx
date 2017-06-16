@@ -106,9 +106,9 @@ class UpdateAddress extends Component {
     const { addressList } = this.props.address
     const newDefaultFlag = e.target.checked ? 'N' : 'Y'
     const newObj = new Object(this.state)
-    if (addressList.length <= 1) {
+    if (newObj.defaultFlag === 'Y') {
       Tool.alert("必须有一个默认地址！")
-      this.setState({ isChange: newObj.defaultFlag === 'Y' ? false : true})
+      this.setState({ isChange: newObj.defaultFlag === 'Y' ? false : true })
     } else {
       delete newObj.isChange
       delete newObj.showAddr
@@ -176,7 +176,7 @@ class UpdateAddress extends Component {
           <div className="item">
             <div className="key">邮政编码</div>
             <div className="value">
-              <input value={this.state.postCode} placeholder="请输入邮政编码" maxLength="6" onChange={this.handleInputMethod.bind(this, 'postCode')} />
+              <input value={this.state.postCode} placeholder="请输入邮政编码" type="tel" maxLength="6" onChange={this.handleInputMethod.bind(this, 'postCode')} />
             </div>
           </div>
           <div className="item" onClick={this.modifyLocation.bind(this)}>
@@ -187,13 +187,13 @@ class UpdateAddress extends Component {
           <div className="item">
             <div className="key">街道</div>
             <div className="value">
-              <input value={this.state.street} maxLength="100" placeholder="请填写街道地址" onChange={this.handleInputMethod.bind(this, 'street')} />
+              <input value={this.state.street} maxLength="20" placeholder="请填写街道地址" onChange={this.handleInputMethod.bind(this, 'street')} />
             </div>
           </div>
           <div className="item">
             <div className="key">详细地址</div>
             <div className="value">
-              <input value={this.state.address} maxLength="100" placeholder="请填写详细地址" onChange={this.handleInputMethod.bind(this, 'address')} />
+              <input value={this.state.address} maxLength="150" placeholder="请填写详细地址" onChange={this.handleInputMethod.bind(this, 'address')} />
             </div>
           </div>
         </div>

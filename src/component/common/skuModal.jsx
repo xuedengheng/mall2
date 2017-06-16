@@ -9,9 +9,15 @@ import { getFirstValidSku, getSkuTypes, getSkuSquare, getSkuMatrix, updateSkuSqu
 import { track, CART_FROM } from '../../utils/sa'
 import { Tool } from '../../config/Tool'
 
+function disableScroll(e) {
+  e.preventDefault()
+}
+
 export default class SkuModal extends Component {
   constructor(props) {
     super(props)
+    this.scrollY = 0
+    this.posY = 0
     this.state = {
       now: moment(),
       selectedSku: {},
@@ -273,6 +279,18 @@ export default class SkuModal extends Component {
     this.props.onClose()
   }
 
+  startMoveBox(e) {
+    const { box } = this.refs
+    this.posY = e.touches[0].pageY
+    this.scrollY = box.scrollTop
+  }
+
+  moveBox(e) {
+    let { box } = this.refs
+    const distanceY = e.touches[0].pageY - this.posY
+    box.scrollTop = this.scrollY - distanceY
+  }
+
   renderFee() {
     const { selectedSku } = this.state
 
@@ -329,7 +347,11 @@ export default class SkuModal extends Component {
             </div>
             {this.renderCartTitle()}
           </div>
-          <div className="sku-box">
+          <div
+            className="sku-box"
+            ref="box"
+            onTouchStart={this.startMoveBox.bind(this)}
+            onTouchMove={this.moveBox.bind(this)}>
             {this.skuInner()}
             <div className="count-inner">
               <p className="count-title">请选择数量：</p>

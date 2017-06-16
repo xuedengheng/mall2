@@ -6,7 +6,7 @@ import template from './common/template'
 import { Tool } from '../config/Tool'
 
 import { track } from '../utils/sa'
-import { isPassword } from '../utils/reg'
+import { isPassword, isCap } from '../utils/reg'
 
 class Forget extends React.Component {
   constructor(props) {
@@ -42,8 +42,8 @@ class Forget extends React.Component {
       res = "请输入新密码（6-15字符）"
     } else if (!isPassword(password)) {
       res = "密码只能由字母数字下划线组成"
-    } else if (verifyCode == '') {
-      res = "请输入验证码"
+    } else if (verifyCode == '' || verifyCode.length > 6 || !isCap(verifyCode)) {
+      res = "请输入6位短信验证码"
     } else {
       res = true
     }
@@ -146,7 +146,7 @@ class Forget extends React.Component {
             }
           </div>
           <div className="input-frag">
-            <input className="input-inner" type="text" placeholder="请输入验证码" maxLength="6" onChange={this.handleInput.bind(this, 'verifyCode')}/>
+            <input className="input-inner" type="tel" placeholder="请输入验证码" maxLength="6" onChange={this.handleInput.bind(this, 'verifyCode')}/>
             <button type="button" className="cap-btn" disabled={!this.state.ready} onClick={this.onVerifyCodeClick.bind(this)}>{verifyCodeText}</button>
           </div>
           <div className="input-frag">

@@ -22,7 +22,8 @@ const requestData = ({ url, method = 'GET', data = undefined, header = {} }) => 
           'X-Requested-With': 'XMLHttpRequest',
           'Content-Type': 'application/json',
           'mChannal': APP_ID,
-          'mobile': account
+          'mobile': account,
+          'Device': 'H5'
         },
         mode: 'cors',
         body: data ? JSON.stringify(data) : undefined,

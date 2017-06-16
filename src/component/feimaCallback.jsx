@@ -8,7 +8,15 @@ class FeimaCallback extends Component {
   componentWillMount() {
     const { mode, id } = this.props.params
     const { query } = this.props.location
-    hashHistory.replace(`pay?callback=1&id=${id}&mode=${mode}&amount=${query.amount}&orderjnid=${query.outOrderNo}`)
+    const amount = (() => {
+      if (query.amount) {
+        return query.amount
+      } else {
+        let amountString = query.outTradeNo.split('?')[1]
+        return amountString.split('=')[1]
+      }
+    })()
+    hashHistory.replace(`pay?callback=1&id=${id}&mode=${mode}&amount=${amount}&orderjnid=${query.outOrderNo}`)
   }
 
   render() {

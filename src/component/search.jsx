@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import storage from '../utils/storage'
 
 import template from './common/template'
+import ConfirmModal from './common/confirmModal'
 
 const searchKey = 'ywyx_search'
 
@@ -16,7 +17,8 @@ class Search extends Component {
     super(props)
     this.state = {
       search: '',
-      history: []
+      history: [],
+      isShowTrash: false
     }
   }
 
@@ -43,28 +45,44 @@ class Search extends Component {
         const newHistory = [search].concat(history.slice(0, SEARCH_KEY_LIMIT - 1))
         storage.set(searchKey, newHistory)
       }
+      this.props.changeLoadingState(true)
       hashHistory.push(`result?from=search&names=${encodeURIComponent(search)}`)
     }
   }
 
   searchHistory(history, e) {
     e.preventDefault()
+    this.props.changeLoadingState(true)
     hashHistory.push(`result?from=search&names=${encodeURIComponent(history)}`)
   }
 
-  delHistory(e) {
-    e.preventDefault()
-    if (this.state.history.length === 0) return false
-    const confirm = window.confirm('确认删除搜索记录？')
-    if (confirm) {
+  showTrashModal() {
+    const { history } = this.state
+    if (history.length !== 0) {
+      this.setState({ isShowTrash: true })
+    }
+  }
+
+  closeTrashModal() {
+    this.setState({ isShowTrash: false })
+  }
+
+  delHistory() {
+    const { history } = this.state
+    if (history.length === 0) {
+      isShowTrash: false
+    } else {
       storage.remove(searchKey)
-      this.setState({ history: [] })
+      this.setState({
+        history: [],
+        isShowTrash: false
+      })
     }
   }
 
   render() {
     const { showFixed } = this.props.global
-    const { history } = this.state
+    const { history, isShowTrash } = this.state
 
     return (
       <div className="search-wrap">
@@ -89,7 +107,7 @@ class Search extends Component {
           <div data-flex="dir:left cross:center box:justify" className="title">
             <div className="search icon"></div>
             <p className="text">搜索历史</p>
-            <div className="trash icon" onClick={this.delHistory.bind(this)}></div>
+            <div className="trash icon" onClick={this.showTrashModal.bind(this)}></div>
           </div>
           <div className="history-inner">
             {history.map((item, index) => {
@@ -108,6 +126,16 @@ class Search extends Component {
             })}
           </div>
         </div>
+        {isShowTrash &&
+          <ConfirmModal
+            isFixed={showFixed}
+            tips="温馨提示"
+            subTips="确认删除搜索记录吗？"
+            confirmBtnText="确定"
+            onCancel={this.closeTrashModal.bind(this)}
+            onConfirm={this.delHistory.bind(this)}
+            ></ConfirmModal>
+        }
       </div>
     )
   }

@@ -7,8 +7,9 @@ import { Tool } from '../config/Tool'
 import { CDN_HOST } from '../config/constant'
 
 import { track } from '../utils/sa'
-import { isPassword } from '../utils/reg'
+import { isPassword, isCap } from '../utils/reg'
 import storage from '../utils/storage'
+import { isAndroid } from '../utils/ua'
 
 const REG_MOBILE = 'regMobile'
 const REG_CAP = 'regCap'
@@ -32,13 +33,13 @@ class Register extends Component {
   }
 
   componentWillMount() {
-    let mobile = storage.get(REG_MOBILE) || ''
-    let password = storage.get(REG_PW) || ''
-    let verifyCode = storage.get(REG_CAP) || ''
-    let vcTimer = storage.get(REG_TIMER) || 60
-    let isChecked = storage.get(REG_PROTOCOL) || false
-    this.setState({ mobile, password, verifyCode, vcTimer, isChecked })
-    setTimeout(() => {
+    if (isAndroid()) {
+      let mobile = storage.get(REG_MOBILE) || ''
+      let password = storage.get(REG_PW) || ''
+      let verifyCode = storage.get(REG_CAP) || ''
+      let vcTimer = storage.get(REG_TIMER) || 60
+      let isChecked = storage.get(REG_PROTOCOL) || false
+      this.setState({ mobile, password, verifyCode, vcTimer, isChecked })
       if (storage.get(REG_TIMER)) {
         this.initTimer()
       }
@@ -47,7 +48,7 @@ class Register extends Component {
       storage.remove(REG_CAP)
       storage.remove(REG_TIMER)
       storage.remove(REG_PROTOCOL)
-    }, 0)
+    }
   }
 
   componentWillUnmount() {
@@ -71,7 +72,7 @@ class Register extends Component {
       res = "请输入密码（6-15字符）"
     } else if (!isPassword(password)) {
       res = "密码只能由字母数字下划线组成"
-    } else if (verifyCode == '' || password.length > 6) {
+    } else if (verifyCode == '' || verifyCode.length > 6 || !isCap(verifyCode)) {
       res = "请输入6位短信验证码"
     } else if (!isChecked) {
       res = "请查看用户协议"
@@ -169,22 +170,24 @@ class Register extends Component {
   goToProtocol(e) {
     e.preventDefault()
     const { mobile, password, verifyCode, vcTimer, ready, isChecked } = this.state
-    let newMobile = mobile.trim()
-    let newPassword = typeof password === 'string' ? password.trim() : ''
-    let newCap = typeof verifyCode === 'string' ? verifyCode.trim() : ''
-    if (newMobile) {
-      storage.set(REG_MOBILE, newMobile)
+    if (isAndroid()) {
+      let newMobile = mobile.trim()
+      let newPassword = typeof password === 'string' ? password.trim() : ''
+      let newCap = typeof verifyCode === 'string' ? verifyCode.trim() : ''
+      if (newMobile) {
+        storage.set(REG_MOBILE, newMobile)
+      }
+      if (newPassword) {
+        storage.set(REG_PW, newPassword)
+      }
+      if (newCap) {
+        storage.set(REG_CAP, newCap)
+      }
+      if (!ready) {
+        storage.set(REG_TIMER, vcTimer)
+      }
+      storage.set(REG_PROTOCOL, isChecked)
     }
-    if (newPassword) {
-      storage.set(REG_PW, newPassword)
-    }
-    if (newCap) {
-      storage.set(REG_CAP, newCap)
-    }
-    if (!ready) {
-      storage.set(REG_TIMER, vcTimer)
-    }
-    storage.set(REG_PROTOCOL, isChecked)
     setTimeout(() => {
       window.location.href = `${CDN_HOST}/yiwu/YXagreement.html`
     }, 0)
@@ -210,7 +213,7 @@ class Register extends Component {
             }
           </div>
           <div className="input-frag">
-            <input className="input-inner" type="text" placeholder="请输入验证码" maxLength="6" value={verifyCode} onChange={this.handleInput.bind(this, 'verifyCode')}/>
+            <input className="input-inner" type="tel" placeholder="请输入验证码" maxLength="6" value={verifyCode} onChange={this.handleInput.bind(this, 'verifyCode')}/>
             <button type="button" className="cap-btn" disabled={!this.state.ready} onClick={this.onVerifyCodeClick.bind(this)}>{verifyCodeText}</button>
           </div>
           <div className="input-frag">

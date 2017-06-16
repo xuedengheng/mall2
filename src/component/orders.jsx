@@ -71,7 +71,7 @@ class Orders extends Component {
     if (now.unix() >= exprieTime.unix()) {
       Tool.alert('抱歉，该订单已超过有效支付期')
     } else {
-      hashHistory.push(`pay?id=${order.orderId}&from=order&mode=immediately`)
+      hashHistory.push(`pay?id=${order.orderId}&from=order&mode=immediately&flag=single`)
     }
   }
 

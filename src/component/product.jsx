@@ -85,7 +85,7 @@ class Product extends Component  {
     })
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     const { selectedArea } = this.state
     if( nextProps.params.id != this.props.params.id ){
       this.props.getProduct(nextProps.params.id).then(json => {

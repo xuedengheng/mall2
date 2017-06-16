@@ -62,10 +62,10 @@ export const payOrder = (way, params, orderMode, orderId) => {
     } else {
       const query = { ...params, mobilePhone: account }
       if (way === 'WEIXIN') {
-        // const newQuery = Tool.queryString2Obj(window.location.search.slice(1))
-        const openId = session.get('openId')
+        const openId = Cookies.get('openId') || ''
+        alert('openId in pay => ' + openId)
         if (isWx() && !openId) {
-          Tool.alert('微信授权失败')
+          Tool.alert('openId获取失败')
           return false
         } else {
           query.openid = openId

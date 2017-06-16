@@ -20,6 +20,7 @@ class Refund extends Component {
 
   componentWillMount() {
     const { query } = this.props.location
+    this.props.getRefundDetailSuccess(null)
     if (query.requestid) {
       this.props.getRefundDetail(query.requestid)
     } else if (query.orderid && query.skuid) {

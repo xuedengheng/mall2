@@ -88,7 +88,7 @@ export const getOrderDetailForState = (id) => {
   }
 }
 
-const getOrderDetailSuccess = (payload) => {
+export const getOrderDetailSuccess = (payload) => {
   return {
     type: actionTypes.GET_ORDER_DETAIL,
     payload

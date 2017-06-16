@@ -18,6 +18,10 @@ import OnsaleTemplate from './common/onsaleTemplate'
 import CustomOneTemplate from './common/customOneTemplate'
 import CustomTwoTemplate from './common/customTwoTemplate'
 
+function disableScroll(e) {
+  e.preventDefault()
+}
+
 class Main extends Component {
 
   constructor(props) {
@@ -31,6 +35,8 @@ class Main extends Component {
     const { showcase } = this.props
     if (showcase.list.length <= 0) {
       this.props.getShowcaseList(true)
+    } else {
+      this.props.getShowcaseTemplate(showcase.index, true)
     }
   }
 
@@ -48,8 +54,24 @@ class Main extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { showSkuModal } = nextProps.global
+    const { wrap } = this.refs
+    if (wrap) {
+      if (showSkuModal) {
+        wrap.addEventListener('touchmove', disableScroll, false)
+      } else {
+        wrap.removeEventListener('touchmove', disableScroll, false)
+      }
+    }
+  }
+
+  disableScroll(e) {
+    e.preventDefault()
+  }
+
   handleTabClick(id) {
-    this.props.getShowcaseTemplate(id)
+    this.props.getShowcaseTemplate(id, true)
     window.scrollTo(0, 0)
   }
 
@@ -207,19 +229,14 @@ class Main extends Component {
   render() {
     const itemWidth = 1.7
     const { showcase } = this.props
-    const { showFixed, showSkuModal } = this.props.global
+    const { showFixed } = this.props.global
     const fontSize = parseFloat(document.querySelector('html').style.fontSize)
     const len = showcase.list.length
     const categoryWidth = window.innerWidth >= itemWidth * fontSize * len ? '100%' : `${itemWidth * len + 0.2}rem`
     const categoryItemWidth = window.innerWidth >= itemWidth * fontSize * len ? `${100 / len}%` : `${itemWidth}rem`
 
-    const style = showSkuModal ? {
-      height: '100%',
-      overflow: 'hidden'
-    } : {}
-
     return (
-      <div className="dashboard-wrap" style={style}>
+      <div className="dashboard-wrap" ref="wrap">
         <div
           data-flex="dir:left cross:center box:last"
           className="search-box"

@@ -129,6 +129,10 @@ class CreateRefund extends Component {
     }
   }
 
+  componentDidMount() {
+
+  }
+
   goBack(e) {
     e.preventDefault()
     const { step } = this.state
@@ -434,11 +438,12 @@ class CreateRefund extends Component {
                 <div className="placeholder">请输入退款类型</div>
               }
               <select
+                ref="refundType"
                 className="input-select"
                 value={form.refundType}
                 disabled={storeId === 'JD'}
                 onChange={this.handleInput.bind(this, 'refundType')}>
-                <option value=""></option>
+                <option hidden disabled value="" style={{ display: 'none' }}></option>
                 { _.map(REFUND_TYPE, (value, key) => {
                   return <option key={key} value={key}>{value}</option>
                 }) }
@@ -454,8 +459,12 @@ class CreateRefund extends Component {
               {!form.receiveFlag &&
                 <div className="placeholder">请输入收货状态</div>
               }
-              <select className="input-select" value={form.receiveFlag} onChange={this.handleInput.bind(this, 'receiveFlag')}>
-                <option value=""></option>
+              <select
+                ref="receiveFlag"
+                className="input-select"
+                value={form.receiveFlag}
+                onChange={this.handleInput.bind(this, 'receiveFlag')}>
+                <option hidden disabled value="" style={{ display: 'none' }}></option>
                 { _.map(RECEIVE_FLAG, (value, key) => {
                   return <option key={key} value={key}>{value}</option>
                 }) }

@@ -10,6 +10,10 @@ import FootTab from './common/footTab'
 import template from './common/template'
 import SkuModal from './common/skuModal'
 
+function disableScroll(e) {
+  e.preventDefault()
+}
+
 class Result extends React.Component {
 
   constructor(props) {
@@ -43,25 +47,39 @@ class Result extends React.Component {
     const account = Cookies.get('account') || ''
     this.props.changeLoadingState(true)
     this.props.getSearchListSuccess([])
-    this.props.getSearchList(this.history_flag, { ...query, pageNo: 0 })
-    .then(json => {
-      this.props.changeLoadingState(false)
-      this.setState({ inited: true })
-      if (json && json.success && query.names) {
-        track('search', {
-          keyword: query.names,
-          has_result: json.result.length > 0 ? true : false,
-          history_flag: this.history_flag
-        })
+    setTimeout(() => {
+      this.props.getSearchList(this.history_flag, { ...query, pageNo: 0 })
+      .then(json => {
+        this.props.changeLoadingState(false)
+        this.setState({ inited: true })
+        if (json && json.success && query.names) {
+          track('search', {
+            keyword: query.names,
+            has_result: json.result.length > 0 ? true : false,
+            history_flag: this.history_flag
+          })
+        }
+      })
+      if (account !== '') {
+        this.props.getCartList()
       }
-    })
-    if (account !== '') {
-      this.props.getCartList()
+    }, 1000)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { showSkuModal } = nextProps.global
+    const { wrap } = this.refs
+    if (wrap) {
+      if (showSkuModal) {
+        wrap.addEventListener('touchmove', disableScroll, false)
+      } else {
+        wrap.removeEventListener('touchmove', disableScroll, false)
+      }
     }
   }
 
   selectFilter(type, e) {
-    e.preventDefault()
+    e && e.preventDefault()
     const { query } = this.state
     const sortOrder = (() => {
       if (type === 'price' && type === query.sortCol) {
@@ -78,6 +96,16 @@ class Result extends React.Component {
     }
     this.props.getSearchList(this.history_flag, params)
     this.setState({ query: params })
+  }
+
+  selectDefault(e) {
+    e.preventDefault()
+    const { query } = this.props.location
+    if (query.catalogids) {
+      this.selectFilter('id')
+    } else {
+      this.selectFilter('')
+    }
   }
 
   selectProduct(item, e) {
@@ -246,18 +274,13 @@ class Result extends React.Component {
   }
 
   render() {
-    const { showFixed, showSkuModal } = this.props.global
+    const { showFixed } = this.props.global
     const { query, isShowSkuModal } = this.state
     const search = query.names === undefined ? '商品名 品牌 分类' : query.names.trim()
     const cartLength = this.props.cart.list.length
 
-    const style = showSkuModal ? {
-      height: '100%',
-      overflow: 'hidden'
-    } : {}
-
     return (
-      <div className="result-wrap" style={style}>
+      <div className="result-wrap" ref="wrap">
         <div
           data-flex="dir:left cross:center box:justify"
           className={classNames('result-input-box', { 'be-fixed': showFixed })}>
@@ -275,7 +298,7 @@ class Result extends React.Component {
         <div
           data-flex="dir:left main;center cross:center box:mean"
           className={classNames('filter-box', { 'be-fixed': showFixed })}>
-          <div className={classNames('item', { selected: query.sortCol === '' })} onClick={this.selectFilter.bind(this, '')}>默认</div>
+          <div className={classNames('item', { selected: query.sortCol === '' || query.sortCol === 'id' })} onClick={this.selectDefault.bind(this)}>默认</div>
           <div className={classNames('item', { selected: query.sortCol === 'price' })} onClick={this.selectFilter.bind(this, 'price')}>
             价格
             <div className="order">

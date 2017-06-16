@@ -35,7 +35,6 @@ class Pay extends Component {
 
   routerWillLeave(nextLocation) {
     const { isPaid } = this.state
-    console.log(nextLocation)
     if (!isPaid) {
       this.setState({ abandon: true })
       return false
@@ -44,6 +43,7 @@ class Pay extends Component {
 
   componentWillMount() {
     const { query } = this.props.location
+    console.log(query)
     if (query.callback == 1) {
       this.setState({
         amount: query.amount,
@@ -199,8 +199,8 @@ class Pay extends Component {
       }
       this.props.payOrder(result.payWay, newParams, query.mode, query.id)
       .then(json => {
-        this.props.changeLoadingState(false)
         if (!json.result.payInfo) {
+          this.props.changeLoadingState(false)
           Tool.alert('缺少支付参数')
           return false
         }
@@ -219,9 +219,15 @@ class Pay extends Component {
               },
               function(res) {
                 if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                  that.props.changeLoadingState(false)
+                  that.setState({ confirm: true })
+                } else {
+                  that.props.changeLoadingState(false)
                   that.setState({ confirm: true })
                 }
               })
+              that.props.changeLoadingState(false)
+              that.setState({ confirm: true })
             }
             if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
               wxPay()
@@ -236,10 +242,12 @@ class Pay extends Component {
             break
           case 'ALIPAY':
           case 'FEIMA':
+            that.props.changeLoadingState(false)
+            that.setState({ confirm: true })
             if (query.mode && query.mode === 'submit') {
               hashHistory.replace(`pay?callback=1&mode=submit&orderjnid=${result.orderJnId}&amount=${amount}`)
             } else if (query.mode && query.mode === 'immediately') {
-              hashHistory.replace(`pay?callback=1&id=${query.id}&mode=immediately&orderjnid=${result.orderJnId}`)
+              hashHistory.replace(`pay?callback=1&id=${query.id}&mode=immediately&orderjnid=${result.orderJnId}&amount=${detail.payAmount}`)
             }
             setTimeout(() => {
               window.location.href = json.result.payInfo.payUrl
@@ -248,7 +256,6 @@ class Pay extends Component {
           default:
             break
         }
-        this.setState({ confirm: true })
       })
       .catch(error => {
         this.props.changeLoadingState(false)
@@ -278,7 +285,7 @@ class Pay extends Component {
         </div>
         <div className="total-fee">
           <p className="key">订单金额</p>
-          <p className="value">¥ {query.mode === 'submit' ? amount : detail ? detail.payAmount : ''}</p>
+          <p className="value">¥ {query.amount ? query.amount : amount ? amount : detail ? detail.payAmount : ''}</p>
         </div>
         <div className="pay-list">
           {isWx() &&
@@ -333,7 +340,6 @@ class Pay extends Component {
     const { isShowSku, result, resultObj } = this.state
 
     const style = showSkuModal ? {
-      height: '100%',
       overflow: 'hidden'
     } : {}
 

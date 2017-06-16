@@ -6,6 +6,8 @@ import reactMixin from 'react-mixin'
 import template from './common/template'
 import { Tool } from '../config/Tool'
 
+import { isPassword } from '../utils/reg'
+
 @reactMixin.decorate(Lifecycle)
 class Login extends Component {
 
@@ -22,7 +24,6 @@ class Login extends Component {
   routerWillLeave(nextLocation) {
     const { canBack } = this.state
     const { query } = this.props.location
-    console.log(nextLocation)
     if (nextLocation.action !== 'POP' || (nextLocation.action === 'POP' && canBack)) {
       return true
     } else {
@@ -44,11 +45,13 @@ class Login extends Component {
 
     let res = null
 
-    if(!Tool.phoneCheck(mobile)){
+    if (!Tool.phoneCheck(mobile)) {
       res = "请输入正确手机号"
-    }else if (password==null || password.length < 6 || password.length > 15 ) {
+    } else if (password == null || password.length < 6 || password.length > 15 ) {
       res = "请输入密码（6-15字符）"
-    }else{
+    } else if (!isPassword(password)) {
+      res = "密码只能由字母数字下划线组成"
+    } else {
       res = true
     }
 

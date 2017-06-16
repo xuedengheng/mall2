@@ -25,6 +25,9 @@ class Refunds extends Component {
     const { page } = this.props.refund
     const { query } = this.state
     this.props.getRefundList({ page, size: query.size })
+    .then(json => {
+      this.setState({ hasMore: this.props.refund.list.length < json.total })
+    })
   }
 
   goBack(e) {
@@ -51,12 +54,11 @@ class Refunds extends Component {
 
   handRefreshing() {
     const { action, query } = this.state
-    const { list } = this.props.refund
     if (STATS.refreshing === action) return false
     this.props.getRefundList({ page: 0, size: query.size })
     .then(json => {
       if (json && json.success) {
-        const hasMore = list.length < json.total
+        const hasMore = this.props.refund.list.length < json.total
         this.setState({
           hasMore,
           action: STATS.refreshed
@@ -74,13 +76,13 @@ class Refunds extends Component {
 
   handLoadMore() {
     const { action, query, hasMore } = this.state
-    const { list, page } = this.props.refund
+    const { page } = this.props.refund
     if (STATS.loading === action) return false
     if (hasMore) {
       this.props.getRefundList({ page: page + 1, size: query.size })
       .then(json => {
         if (json && json.success) {
-          const hasMore = list.length < json.total
+          const hasMore = this.props.refund.list.length < json.total
           this.setState({
             hasMore,
             action: STATS.reset

@@ -30,6 +30,7 @@ class Order extends Component {
 
   componentWillMount() {
     const { id } = this.props.params
+    this.props.getOrderDetailSuccess(null)
     this.props.getOrderDetail(id)
   }
 
@@ -92,7 +93,7 @@ class Order extends Component {
     if (now.unix() >= exprieTime.unix()) {
       Tool.alert('抱歉，该订单已超过有效支付期')
     } else {
-      hashHistory.push(`pay?id=${parcel.orderId}&from=order&mode=immediately`)
+      hashHistory.push(`pay?id=${parcel.orderId}&from=order&mode=immediately&flag=single`)
     }
   }
 
@@ -417,10 +418,16 @@ class Order extends Component {
             <p className="left">商品总计</p>
             <p className="right">¥ {detail.amount}</p>
           </div>
-          {detail.isDiscounted == 'Y' &&
+          {Number(detail.discount) !== 0 &&
             <div className="text-inner">
               <p className="left">优惠总计</p>
-              <p className="right">-¥ {(Number(detail.couponDiscount) + Number(detail.discount)).toFixed(2)}</p>
+              <p className="right">-¥ {detail.discount}</p>
+            </div>
+          }
+          {Number(detail.couponDiscount) !== 0 &&
+            <div className="text-inner">
+              <p className="left">优惠券</p>
+              <p className="right">-¥ {detail.couponDiscount}</p>
             </div>
           }
           <div className="text-inner">

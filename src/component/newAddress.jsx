@@ -120,7 +120,7 @@ class NewAddress extends Component {
           <div className="item">
             <div className="key">邮政编码</div>
             <div className="value">
-              <input value={this.state.postCode} placeholder="请输入邮政编码" type="text" maxLength="6" onChange={this.handleInputMethod.bind(this, 'postCode')} />
+              <input value={this.state.postCode} placeholder="请输入邮政编码" type="tel" maxLength="6" onChange={this.handleInputMethod.bind(this, 'postCode')} />
             </div>
           </div>
           <div className="item" onClick={this.modifyLocation.bind(this)}>
@@ -131,13 +131,13 @@ class NewAddress extends Component {
           <div className="item">
             <div className="key">街道</div>
             <div className="value">
-              <input value={this.state.street} maxLength="100" placeholder="请填写街道地址" type="text" onChange={this.handleInputMethod.bind(this, 'street')} />
+              <input value={this.state.street} maxLength="20" placeholder="请填写街道地址" type="text" onChange={this.handleInputMethod.bind(this, 'street')} />
             </div>
           </div>
           <div className="item">
             <div className="key">详细地址</div>
             <div className="value">
-              <input value={this.state.address} maxLength="100" placeholder="请填写详细地址" type="text" onChange={this.handleInputMethod.bind(this, 'address')} />
+              <input value={this.state.address} maxLength="150" placeholder="请填写详细地址" type="text" onChange={this.handleInputMethod.bind(this, 'address')} />
             </div>
           </div>
         </div>

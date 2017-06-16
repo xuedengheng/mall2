@@ -128,8 +128,6 @@ export const updateSkuSquare = (skuSquare, skuMatrix, selectValue, attrId)=> {
       }else {
         object["disabled"] = singleValueShouldBeDiabled(skuMatrix, object["attrValue"])
       }
-
-      //console.log("同级其他squareObject", object)
     }
   })
 
